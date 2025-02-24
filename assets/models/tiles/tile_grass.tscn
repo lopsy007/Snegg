@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4h3vboqqsn04"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pth3e"]
+albedo_color = Color(0.139399, 0.358065, 1.92523e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jcgni"]
+material = SubResource("StandardMaterial3D_pth3e")
+size = Vector3(2, 0.05, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5fu14"]
+size = Vector3(2, 0.05, 2)
+
+[node name="tile_grass" type="Node3D"]
+
+[node name="tile_grass" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_jcgni")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="tile_grass"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tile_grass/StaticBody3D"]
+shape = SubResource("BoxShape3D_5fu14")

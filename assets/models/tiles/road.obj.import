@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dux2ng88mubug"
+path="res://.godot/imported/road.obj-3987eaeeb071048ea229f844d114e71c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/road.obj-3987eaeeb071048ea229f844d114e71c.mesh"]
+
+source_file="res://assets/models/tiles/road.obj"
+dest_files=["res://.godot/imported/road.obj-3987eaeeb071048ea229f844d114e71c.mesh", "res://.godot/imported/road.obj-3987eaeeb071048ea229f844d114e71c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfyq8ewg18j32"]
+
+[ext_resource type="PackedScene" uid="uid://c807y56m0sgpu" path="res://assets/models/egg.glb" id="1_i2etp"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+
+[node name="egg" parent="." instance=ExtResource("1_i2etp")]
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+depth = 2.0
+polygon = PackedVector2Array(1, 0, -1, 0, -3, 2, 0, 5, 3, 2, 1, 0)
+
+[editable path="egg"]

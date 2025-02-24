@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://xhnxfw4qqxl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e18xl"]
+albedo_color = Color(0, 0.313726, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wkcvh"]
+material = SubResource("StandardMaterial3D_e18xl")
+size = Vector3(2, 0.05, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_aon5k"]
+points = PackedVector3Array(-0.5, -0.01, -0.5, -0.5, 0.01, -0.5, 0.5, -0.01, -0.5, -0.5, -0.01, 0.5, -0.5, 0.01, 0.5, 0.5, 0.01, -0.5, 0.5, -0.01, 0.5, 0.5, 0.01, 0.5)
+
+[node name="tile_water" type="Node3D"]
+
+[node name="tile_water" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wkcvh")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="tile_water"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tile_water/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_aon5k")

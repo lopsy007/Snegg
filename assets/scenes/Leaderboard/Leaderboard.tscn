@@ -1,0 +1,114 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqfhqleq6ieyn"]
+
+[ext_resource type="Script" path="res://assets/scripts/player_add_bar.gd" id="1_quxnp"]
+[ext_resource type="Texture2D" uid="uid://b33ip207ir6h7" path="res://Menu/checkbox2.png" id="2_nnlue"]
+[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/xbox-removebg-preview.png" id="3_5hebh"]
+[ext_resource type="Script" path="res://assets/scripts/player_list.gd" id="4_orflc"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_k4xrs"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_gp86j"]
+events = [SubResource("InputEventKey_k4xrs")]
+
+[node name="Leaderboard" type="VBoxContainer"]
+z_index = 1
+anchors_preset = -1
+anchor_right = 0.25
+offset_right = 12.0
+offset_bottom = 110.0
+grow_horizontal = 2
+size_flags_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Player name to add"
+script = ExtResource("1_quxnp")
+
+[node name="ConfirmButton" type="Button" parent="TextEdit" node_paths=PackedStringArray("shortcut_context")]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -19.5
+offset_right = -36.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+shortcut_context = NodePath("..")
+shortcut = SubResource("Shortcut_gp86j")
+text = "
+"
+icon = ExtResource("2_nnlue")
+flat = true
+expand_icon = true
+
+[node name="ResetButton" type="Button" parent="TextEdit"]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -19.5
+offset_right = -6.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+text = "
+"
+icon = ExtResource("3_5hebh")
+flat = true
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(300, 30)
+layout_mode = 2
+script = ExtResource("4_orflc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "heiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+scroll_active = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "heisann"
+scroll_active = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "nei"
+fit_content = true
+scroll_active = false
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[connection signal="player_list_updated" from="TextEdit" to="ScrollContainer/VBoxContainer" method="update_player_list"]
+[connection signal="pressed" from="TextEdit/ConfirmButton" to="TextEdit" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="TextEdit/ResetButton" to="TextEdit" method="_on_reset_button_pressed"]

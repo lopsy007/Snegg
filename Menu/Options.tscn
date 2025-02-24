@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://d25iayn0w8kou"]
+
+[ext_resource type="Script" path="res://Menu/Options.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://dbpgouq64x323" path="res://Menu/background.png" id="4"]
+[ext_resource type="PackedScene" path="res://fade_in/FadeIn.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Menu/UISound.tscn" id="6"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_4qopj"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_2cndq"]
+events = [SubResource("InputEventKey_4qopj")]
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Music Sound" type="Label" parent="VBoxContainer/HBoxContainer1"]
+layout_mode = 2
+text = "Music:"
+
+[node name="Music_Slider" type="HSlider" parent="VBoxContainer/HBoxContainer1/Music Sound"]
+layout_mode = 2
+offset_left = 54.0
+offset_top = 3.0
+offset_right = 89.0
+offset_bottom = 19.0
+size_flags_horizontal = 3
+min_value = -30.0
+max_value = 0.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Game Sound" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Game:"
+
+[node name="Game_Slider" type="HSlider" parent="VBoxContainer/HBoxContainer2/Game Sound"]
+layout_mode = 2
+offset_left = 54.0
+offset_top = 3.0
+offset_right = 89.0
+offset_bottom = 19.0
+size_flags_horizontal = 3
+min_value = -30.0
+max_value = 0.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FullScreen" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Full Screen:"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer3/FullScreen"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 1.0
+offset_right = 122.0
+offset_bottom = 25.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_2cndq")
+text = "Back"
+
+[node name="FadeIn" parent="." instance=ExtResource("5")]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="UISound" parent="." instance=ExtResource("6")]
+
+[node name="Button" parent="UISound" index="0"]
+bus = &"Game"
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer1/Music Sound/Music_Slider" to="." method="_on_Music_Slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/Game Sound/Game_Slider" to="." method="_on_Game_Slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/FullScreen/CheckBox" to="." method="_on_CheckBox_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
+
+[editable path="UISound"]

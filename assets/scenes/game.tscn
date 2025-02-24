@@ -1,0 +1,314 @@
+[gd_scene load_steps=21 format=3 uid="uid://cta3fo3k8pjvg"]
+
+[ext_resource type="Script" path="res://assets/scripts/Game_handler.gd" id="1_qol8s"]
+[ext_resource type="PackedScene" uid="uid://cfyq8ewg18j32" path="res://assets/scenes/player.tscn" id="1_t4udj"]
+[ext_resource type="Script" path="res://assets/scripts/player.gd" id="2_4vqp7"]
+[ext_resource type="Environment" uid="uid://bx1h4so0jvwqu" path="res://assets/skies/sky.tres" id="3_2ecd1"]
+[ext_resource type="MeshLibrary" uid="uid://50hh12ssydb" path="res://assets/meshlibs/tiles.tres" id="4_3joh8"]
+[ext_resource type="MeshLibrary" uid="uid://cx1hrfdmymsuy" path="res://assets/meshlibs/collidables.tres" id="5_i74rc"]
+[ext_resource type="MeshLibrary" uid="uid://cj01iv0808rs0" path="res://assets/meshlibs/deco.tres" id="6_avyly"]
+[ext_resource type="Script" path="res://assets/scripts/auto_lane_deletion.gd" id="8_amdbu"]
+[ext_resource type="Script" path="res://assets/scripts/score_display.gd" id="8_eqwtn"]
+[ext_resource type="Script" path="res://assets/scripts/max_score_display.gd" id="10_q28v0"]
+[ext_resource type="Script" path="res://assets/scripts/name_display.gd" id="11_lwx1e"]
+[ext_resource type="PackedScene" path="res://fade_in/FadeIn.tscn" id="12_2c4wk"]
+[ext_resource type="Script" path="res://assets/scripts/quit_button.gd" id="12_wtbha"]
+[ext_resource type="PackedScene" path="res://Menu/UISound.tscn" id="13_e00to"]
+
+[sub_resource type="GDScript" id="GDScript_y7ogy"]
+script/source = "extends Node3D
+
+@onready var player: CharacterBody3D = %Player
+
+@onready var ground: GridMap = %Ground
+@onready var collidables: GridMap = %Collidables
+@onready var deco: GridMap = %Deco
+@onready var auto_lane_deletion: Timer = %AutoLaneDeletion
+
+const GRASS_INDEX = 0
+const ROAD_INDEX = 2
+const WATER_INDEX = 1
+const EMPTY_INDEX = -1
+
+const LANES_PER_JUMP: int = 2
+
+const LANE_WIDTH: int = 40
+const PLAY_WIDTH: int = 16
+
+const START_X: int = -LANE_WIDTH/2
+const END_X: int = LANE_WIDTH/2
+
+const INITIAL_LANE_COUNT: int = 40
+const INITIAL_LANES_OFFSET: int = 10
+
+
+
+var current_z: int = INITIAL_LANES_OFFSET
+
+
+var road_chance: float = 0.5
+
+
+
+var rng = RandomNumberGenerator.new()
+# rng.randomize() every time
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	move_forward(INITIAL_LANE_COUNT)
+	for z in range(-2, 2):
+		place_grass(false, START_X, END_X, z)
+		place_coll(true, -PLAY_WIDTH/2, PLAY_WIDTH/2, z)
+	
+	
+	
+	
+	
+
+
+func _on_auto_lane_deletion_timeout() -> void:
+	move_forward(1)
+	
+	
+
+
+
+func _on_player_jumped() -> void:
+	move_forward(2)
+		
+		
+func move_forward(lane_count := 1) -> void:
+	for i in range(lane_count):
+		place_random_ground()
+		
+		delete_lane()
+		current_z -= 1
+	
+	
+	
+func place_random_ground(start_x := START_X, end_x := END_X, z := current_z) -> void:
+	rng.randomize()
+	var is_road = rng.randf() < road_chance
+	if is_road:
+		place_road(false, start_x, end_x, z)
+		road_chance = 0.2
+	elif not is_road:
+		place_grass(false, start_x, end_x, z)
+		road_chance = 0.8
+	
+
+	
+	
+func place_road(delete := false, start_x := START_X, end_x := END_X, z := current_z) -> void:
+	if delete:
+		place_lane(ground, EMPTY_INDEX, 0, start_x, end_x, z)
+		return
+	#place road lane
+	
+	place_lane(ground, ROAD_INDEX, 22, start_x, end_x, z)
+	
+	#init cars
+	
+	
+func place_grass(delete := false, start_x := START_X, end_x := END_X, z := current_z) -> void:
+	if delete:
+		delete_lane(start_x, end_x, z)
+		return
+	
+	place_lane(ground, GRASS_INDEX, 0, start_x, end_x, z)
+	place_deco(false, start_x, end_x, z)
+	place_coll(false, start_x, end_x, z)
+	
+
+	
+	
+	
+func place_deco(delete := false, start_x := START_X, end_x := END_X, z := current_z) -> void:
+	
+	if delete:
+		place_lane(deco, EMPTY_INDEX, 0, start_x*2, end_x*2+1, z*2)
+		place_lane(deco, EMPTY_INDEX, 0, start_x*2, end_x*2+1, z*2+1)
+		return
+		
+	
+	for temp_z in range(z*2, z*2+2):
+		for temp_x in range(start_x*2, end_x*2+2):
+			rng.randomize()
+			if rng.randf() < 0.5:
+				deco.set_cell_item(Vector3(temp_x, 0, temp_z), 
+				rng.randi_range(0, len(deco.mesh_library.get_item_list())))
+
+
+
+
+
+func place_coll(delete := false, start_x := START_X, end_x := END_X, z := current_z) -> void:
+	if delete:
+		place_lane(collidables, EMPTY_INDEX, 0, start_x, end_x, z)
+		return
+		
+	for current_x in range(start_x, end_x+1):
+		rng.randomize()
+		
+		if rng.randf() < 0.25 or current_x<-PLAY_WIDTH/2 or current_x>PLAY_WIDTH/2:
+			collidables.set_cell_item(Vector3(current_x, 0, z),
+			rng.randi_range(0, len(collidables.mesh_library.get_item_list())-1))
+	
+	
+	
+	
+func place_lane(grid_map: GridMap, tile := 0, orientation := 0, start_x := START_X, end_x := END_X, z := current_z, 
+) -> void:
+	for current_x in range(start_x, end_x+1):
+		grid_map.set_cell_item(Vector3(current_x, 0, z), tile, orientation)	
+	
+func delete_lane(start_x := START_X, end_x := END_X, z := current_z+INITIAL_LANE_COUNT):
+		place_lane(ground, EMPTY_INDEX, 0, start_x, end_x, z)
+		place_deco(true, start_x, end_x, z)
+		place_coll(true, start_x, end_x, z)
+"
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_c305d"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_7vbw5"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_0wpei"]
+events = [SubResource("InputEventKey_7vbw5")]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1fwml"]
+_data = {
+"fade_in": SubResource("1")
+}
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_qol8s")
+
+[node name="Player" parent="." instance=ExtResource("1_t4udj")]
+unique_name_in_owner = true
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1, 0)
+script = ExtResource("2_4vqp7")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 10, 10)
+environment = ExtResource("3_2ecd1")
+current = true
+
+[node name="Camera3D2" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, -1.51808e-08, 8.60946e-08, 0, 0.984807, 0.173648, -8.74227e-08, 0.173648, -0.984808, 0, 0, 0)
+
+[node name="gridmaps" type="Node3D" parent="."]
+script = SubResource("GDScript_y7ogy")
+
+[node name="Ground" type="GridMap" parent="gridmaps"]
+unique_name_in_owner = true
+mesh_library = ExtResource("4_3joh8")
+
+[node name="Collidables" type="GridMap" parent="gridmaps"]
+unique_name_in_owner = true
+mesh_library = ExtResource("5_i74rc")
+cell_scale = 2.0
+
+[node name="Deco" type="GridMap" parent="gridmaps"]
+unique_name_in_owner = true
+mesh_library = ExtResource("6_avyly")
+cell_size = Vector3(1, 2, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_2ecd1")
+
+[node name="AutoLaneDeletion" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+autostart = true
+script = ExtResource("8_amdbu")
+
+[node name="Killzone" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Killzone"]
+shape = SubResource("WorldBoundaryShape3D_c305d")
+
+[node name="UI" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="NameDisplay" type="RichTextLabel" parent="UI"]
+layout_mode = 2
+text = "Player: "
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("11_lwx1e")
+
+[node name="MaxScoreDisplay" type="RichTextLabel" parent="UI"]
+layout_mode = 2
+text = "High score: "
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("10_q28v0")
+
+[node name="ScoreDisplay" type="RichTextLabel" parent="UI"]
+layout_mode = 2
+text = "Score: "
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("8_eqwtn")
+
+[node name="QuitButton" type="Button" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 2
+shortcut = SubResource("Shortcut_0wpei")
+text = "Quit"
+script = ExtResource("12_wtbha")
+scene_to_load = "Menu\\Main Menu.tscn"
+
+[node name="FadeIn" parent="." instance=ExtResource("12_2c4wk")]
+offset_right = 1980.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="AnimationPlayer" parent="FadeIn" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_1fwml")
+}
+
+[node name="UISound" parent="." instance=ExtResource("13_e00to")]
+
+[node name="Button" parent="UISound" index="0"]
+bus = &"Game"
+
+[connection signal="score_changed" from="." to="UI/ScoreDisplay" method="_on_game_score_changed"]
+[connection signal="died" from="Player" to="." method="_on_player_died"]
+[connection signal="jumped" from="Player" to="." method="_on_player_jumped"]
+[connection signal="jumped" from="Player" to="gridmaps" method="_on_player_jumped"]
+[connection signal="jumped" from="Player" to="AutoLaneDeletion" method="_on_player_jumped"]
+[connection signal="jumped" from="Player" to="UI/ScoreDisplay" method="_on_player_jumped"]
+[connection signal="new_max_reached" from="Player" to="." method="_on_player_new_max_reached"]
+[connection signal="timeout" from="AutoLaneDeletion" to="gridmaps" method="_on_auto_lane_deletion_timeout"]
+[connection signal="body_entered" from="Killzone" to="Player" method="_on_killzone_body_entered"]
+[connection signal="pressed" from="UI/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="fade_finished" from="FadeIn" to="." method="_on_fade_in_fade_finished"]
+
+[editable path="FadeIn"]
+[editable path="UISound"]

@@ -1,0 +1,188 @@
+[gd_scene load_steps=14 format=3 uid="uid://fguf4dmaex8j"]
+
+[ext_resource type="PackedScene" path="res://Menu/Buttons/StartButton.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://dbpgouq64x323" path="res://Menu/background.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://b33ip207ir6h7" path="res://Menu/checkbox2.png" id="3_802a0"]
+[ext_resource type="Texture2D" uid="uid://se15xuw26ys5" path="res://Menu/logo_new.png" id="3_lp6ms"]
+[ext_resource type="PackedScene" path="res://Menu/Buttons/OptionsButton.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/xbox-removebg-preview.png" id="4_t2jei"]
+[ext_resource type="Script" path="res://assets/scripts/player_list.gd" id="5_47eou"]
+[ext_resource type="Texture2D" uid="uid://brmqdoekn47bn" path="res://icon.svg" id="5_pc82i"]
+[ext_resource type="PackedScene" path="res://fade_in/FadeIn.tscn" id="6_jkm8n"]
+[ext_resource type="Script" path="res://Menu/title_screen.gd" id="8"]
+[ext_resource type="PackedScene" path="res://Menu/UISound.tscn" id="9"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b68nj"]
+_data = {
+"fade_in": SubResource("1")
+}
+
+[node name="Title Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("8")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(800, 460)
+texture = ExtResource("2")
+offset = Vector2(160, 80)
+
+[node name="LeaderboardContainer" type="VBoxContainer" parent="."]
+z_index = 1
+layout_mode = 2
+offset_left = 1149.0
+offset_top = 191.5
+offset_right = 1649.0
+offset_bottom = 223.5
+size_flags_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="LeaderboardContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Player name to add"
+
+[node name="ConfirmButton" type="Button" parent="LeaderboardContainer/TextEdit"]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -19.5
+offset_right = -36.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+text = "
+"
+icon = ExtResource("3_802a0")
+flat = true
+expand_icon = true
+
+[node name="ResetButton" type="Button" parent="LeaderboardContainer/TextEdit"]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -19.5
+offset_right = -6.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+text = "
+"
+icon = ExtResource("4_t2jei")
+flat = true
+expand_icon = true
+
+[node name="ItemList" type="ItemList" parent="LeaderboardContainer"]
+layout_mode = 2
+auto_height = true
+item_count = 3
+item_0/text = "hei!:)"
+item_0/icon = ExtResource("5_pc82i")
+item_1/text = "hallo"
+item_2/text = "hei!"
+script = ExtResource("5_47eou")
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 0
+
+[node name="Logo" type="TextureRect" parent="Menu"]
+layout_mode = 2
+texture = ExtResource("3_lp6ms")
+stretch_mode = 4
+
+[node name="CenterRow" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Start Game" parent="Menu/CenterRow/Buttons" instance=ExtResource("1")]
+layout_mode = 2
+text = " "
+scene_to_load = "assets/scenes/game.tscn"
+
+[node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource("4")]
+layout_mode = 2
+text = " "
+
+[node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Menu/CenterRow/CenterContainer"]
+layout_mode = 2
+text = "Controls:
+space - jump
+wasd / arrows - move
+esc - quit"
+uppercase = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Menu/CenterRow/CenterContainer"]
+layout_mode = 2
+
+[node name="VersionLabel" type="Label" parent="Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Version 0.1
+eirikmoltubak
+
+Credits
+Music by Abstraction
+Made by Eirik and ChatGPT"
+
+[node name="FadeIn" parent="." instance=ExtResource("6_jkm8n")]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="AnimationPlayer" parent="FadeIn" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_b68nj")
+}
+
+[node name="UISound" parent="." instance=ExtResource("9")]
+
+[node name="Button" parent="UISound" index="0"]
+bus = &"Game"
+
+[connection signal="fade_finished" from="FadeIn" to="." method="_on_fade_in_fade_finished"]
+
+[editable path="FadeIn"]
+[editable path="UISound"]
