@@ -10,7 +10,7 @@ var song_to_play: String
 func _ready() -> void:
 	Player_data.load()
 	players = Player_data.players
-	player = players["Player 1"]
+	player = players.values()[0]
 	
 
 
