@@ -83,29 +83,6 @@ custom_minimum_size = Vector2(300, 30)
 layout_mode = 2
 script = ExtResource("4_orflc")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 20)
-layout_mode = 2
-
-[node name="RichTextLabel6" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "heiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-scroll_active = false
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "heisann"
-scroll_active = false
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "nei"
-fit_content = true
-scroll_active = false
-
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
 

@@ -51,8 +51,6 @@ static func save():
 	var content: Dictionary = {}
 	for p in players.keys():
 		content[p] = {"h1":players[p].get_high_score(1), "h2":players[p].get_high_score(2)}
-
-	print(content, "player_data.gd/save")
 	
 	file.store_var(content)
 	file.close()
@@ -62,7 +60,6 @@ static func load():
 	var content = file.get_var()
 	
 	
-	print(content, "player_data.gd/load")
 	if content:
 		for id in content.keys():
 			players[id] = Player_data.new(id, content[id]["h1"], content[id]["h2"])

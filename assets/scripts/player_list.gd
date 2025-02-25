@@ -1,16 +1,12 @@
 extends VBoxContainer
 
 @onready var players = Global.players
-@onready var deleteButton = Button.new()
-
+@onready var deleteButton = preload("res://assets/scenes/Leaderboard/DeletePlayerButton.tscn").instantiate()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	update_player_list()
-	deleteButton.icon = preload("res://Menu/xbox-removebg-preview.png")
-	
-	
-	
+	get_children()[0].add_child(deleteButton)
 	
 
 
@@ -21,11 +17,7 @@ func _process(delta: float) -> void:
 
 
 func _on_mouse_entered(player_label:RichTextLabel) -> void:
-	print("entered (player_list.gd)")
-	
-	player_label.add_child(deleteButton)
-	
-	
+	deleteButton.move_button_to(player_label)
 	
 func _on_mouse_exited() -> void:
 	print("exited (player_list.gd)")
@@ -42,5 +34,3 @@ func update_player_list():
 		player_label.scroll_active = false
 		add_child(player_label)
 		player_label.mouse_entered.connect(_on_mouse_entered.bind(player_label))
-
-	

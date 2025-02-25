@@ -1,7 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://h1563m7u8owl"]
+[gd_scene load_steps=6 format=3 uid="uid://h1563m7u8owl"]
 
 [ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="1_d8o1q"]
+[ext_resource type="Script" path="res://assets/scripts/player_del_button.gd" id="2_p1o6q"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_gbnor"]
+device = -1
+keycode = 4194312
+
+[sub_resource type="InputEventKey" id="InputEventKey_sxu45"]
+device = -1
+keycode = 4194308
+
+[sub_resource type="Shortcut" id="Shortcut_5qo6q"]
+events = [SubResource("InputEventKey_gbnor"), SubResource("InputEventKey_sxu45")]
 
 [node name="DeletePlayerButton" type="Button"]
+offset_right = 178.0
+offset_bottom = 178.0
+shortcut = SubResource("Shortcut_5qo6q")
 icon = ExtResource("1_d8o1q")
 flat = true
+icon_alignment = 1
+script = ExtResource("2_p1o6q")
