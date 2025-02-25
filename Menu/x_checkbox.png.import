@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkxxqne4du5e7"
-path="res://.godot/imported/xbox-removebg-preview.png-83fdf9acde6f1b84dcef0a1a173a4dfd.ctex"
+path="res://.godot/imported/x_checkbox.png-28f873f1c678bb4a8da3d9beb6606f6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menu/xbox-removebg-preview.png"
-dest_files=["res://.godot/imported/xbox-removebg-preview.png-83fdf9acde6f1b84dcef0a1a173a4dfd.ctex"]
+source_file="res://Menu/x_checkbox.png"
+dest_files=["res://.godot/imported/x_checkbox.png-28f873f1c678bb4a8da3d9beb6606f6c.ctex"]
 
 [params]
 

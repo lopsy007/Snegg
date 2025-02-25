@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://h1563m7u8owl"]
+[gd_scene load_steps=2 format=3 uid="uid://h1563m7u8owl"]
+
+[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="1_d8o1q"]
 
 [node name="DeletePlayerButton" type="Button"]
+icon = ExtResource("1_d8o1q")
+flat = true

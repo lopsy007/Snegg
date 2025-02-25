@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://assets/scripts/player_add_bar.gd" id="1_quxnp"]
 [ext_resource type="Texture2D" uid="uid://b33ip207ir6h7" path="res://Menu/checkbox2.png" id="2_nnlue"]
-[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/xbox-removebg-preview.png" id="3_5hebh"]
+[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="3_5hebh"]
 [ext_resource type="Script" path="res://assets/scripts/player_list.gd" id="4_orflc"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_k4xrs"]

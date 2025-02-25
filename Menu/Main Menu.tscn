@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b33ip207ir6h7" path="res://Menu/checkbox2.png" id="3_802a0"]
 [ext_resource type="Texture2D" uid="uid://se15xuw26ys5" path="res://Menu/logo_new.png" id="3_lp6ms"]
 [ext_resource type="PackedScene" path="res://Menu/Buttons/OptionsButton.tscn" id="4"]
-[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/xbox-removebg-preview.png" id="4_t2jei"]
+[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="4_t2jei"]
 [ext_resource type="PackedScene" path="res://fade_in/FadeIn.tscn" id="6_jkm8n"]
 [ext_resource type="Script" path="res://Menu/title_screen.gd" id="8"]
 [ext_resource type="PackedScene" path="res://Menu/UISound.tscn" id="9"]
