@@ -2,7 +2,7 @@ extends VBoxContainer
 
 @onready var players = Global.players
 @onready var deleteButtonScene = preload("res://assets/scenes/Leaderboard/DeletePlayerButton.tscn")
-var deleteButton: Button
+var deleteButton: TextureButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -42,6 +42,7 @@ func create_player_list() -> void:
 	
 	deleteButton = deleteButtonScene.instantiate()
 	get_children()[0].add_child(deleteButton)
+	
 	
 	
 func delete_player_list() -> void:

@@ -1,4 +1,4 @@
-extends Button
+extends TextureButton
 
 var player: Player_data
 var parent: RichTextLabel
@@ -6,6 +6,7 @@ var parent: RichTextLabel
 func move_button_to(playerLabel:RichTextLabel):
 	parent = playerLabel
 	reparent(playerLabel)
+	
 	
 
 
