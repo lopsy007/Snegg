@@ -83,9 +83,6 @@ custom_minimum_size = Vector2(300, 30)
 layout_mode = 2
 script = ExtResource("4_orflc")
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 2
-
 [connection signal="player_list_updated" from="TextEdit" to="ScrollContainer/VBoxContainer" method="update_player_list"]
 [connection signal="pressed" from="TextEdit/ConfirmButton" to="TextEdit" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="TextEdit/ResetButton" to="TextEdit" method="_on_reset_button_pressed"]
