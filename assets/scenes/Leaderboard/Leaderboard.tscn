@@ -14,11 +14,9 @@ events = [SubResource("InputEventKey_k4xrs")]
 
 [node name="Leaderboard" type="VBoxContainer"]
 z_index = 1
-anchors_preset = -1
-anchor_right = 0.25
-offset_right = 12.0
-offset_bottom = 110.0
-grow_horizontal = 2
+custom_minimum_size = Vector2(300, 0)
+offset_right = 300.0
+offset_bottom = 194.0
 size_flags_vertical = 2
 
 [node name="TextEdit" type="TextEdit" parent="."]
@@ -79,8 +77,9 @@ layout_mode = 2
 follow_focus = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("4_orflc")
 
 [connection signal="player_list_updated" from="TextEdit" to="ScrollContainer/VBoxContainer" method="update_player_list"]

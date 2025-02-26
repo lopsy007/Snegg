@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://fguf4dmaex8j"]
+[gd_scene load_steps=11 format=3 uid="uid://fguf4dmaex8j"]
 
 [ext_resource type="PackedScene" path="res://Menu/Buttons/StartButton.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://dbpgouq64x323" path="res://Menu/background.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://b33ip207ir6h7" path="res://Menu/checkbox2.png" id="3_802a0"]
+[ext_resource type="PackedScene" uid="uid://cqfhqleq6ieyn" path="res://assets/scenes/Leaderboard/Leaderboard.tscn" id="2_lm4pa"]
 [ext_resource type="Texture2D" uid="uid://se15xuw26ys5" path="res://Menu/logo_new.png" id="3_lp6ms"]
 [ext_resource type="PackedScene" path="res://Menu/Buttons/OptionsButton.tscn" id="4"]
-[ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="4_t2jei"]
 [ext_resource type="PackedScene" path="res://fade_in/FadeIn.tscn" id="6_jkm8n"]
 [ext_resource type="Script" path="res://Menu/title_screen.gd" id="8"]
 [ext_resource type="PackedScene" path="res://Menu/UISound.tscn" id="9"]
@@ -37,67 +36,10 @@ anchors_preset = 0
 script = ExtResource("8")
 
 [node name="background" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(800, 460)
 texture = ExtResource("2")
 offset = Vector2(160, 80)
-
-[node name="LeaderboardContainer" type="VBoxContainer" parent="."]
-z_index = 1
-layout_mode = 2
-offset_left = 1149.0
-offset_top = 191.5
-offset_right = 1649.0
-offset_bottom = 223.5
-size_flags_vertical = 2
-
-[node name="TextEdit" type="TextEdit" parent="LeaderboardContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-placeholder_text = "Player name to add"
-
-[node name="ConfirmButton" type="Button" parent="LeaderboardContainer/TextEdit"]
-clip_contents = true
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -66.0
-offset_top = -19.5
-offset_right = -36.0
-offset_bottom = 11.5
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(1.2, 1.2)
-text = "
-"
-icon = ExtResource("3_802a0")
-flat = true
-expand_icon = true
-
-[node name="ResetButton" type="Button" parent="LeaderboardContainer/TextEdit"]
-clip_contents = true
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -19.5
-offset_right = -6.0
-offset_bottom = 11.5
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(1.2, 1.2)
-text = "
-"
-icon = ExtResource("4_t2jei")
-flat = true
-expand_icon = true
 
 [node name="Menu" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -169,6 +111,17 @@ libraries = {
 
 [node name="Button" parent="UISound" index="0"]
 bus = &"Game"
+
+[node name="Leaderboard" parent="." instance=ExtResource("2_lm4pa")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 1500.0
+offset_top = 200.0
+offset_right = 1800.0
+offset_bottom = 400.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_fade_in_fade_finished"]
 
