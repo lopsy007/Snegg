@@ -114,14 +114,10 @@ bus = &"Game"
 
 [node name="Leaderboard" parent="." instance=ExtResource("2_lm4pa")]
 layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
 offset_left = 1500.0
 offset_top = 200.0
 offset_right = 1800.0
 offset_bottom = 400.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_fade_in_fade_finished"]
 

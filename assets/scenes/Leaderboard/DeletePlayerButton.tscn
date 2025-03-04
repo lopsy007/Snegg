@@ -1,7 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://h1563m7u8owl"]
 
 [ext_resource type="Texture2D" uid="uid://dkxxqne4du5e7" path="res://Menu/x_checkbox.png" id="1_d8o1q"]
-[ext_resource type="Script" path="res://assets/scripts/player_del_button.gd" id="2_p1o6q"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_gbnor"]
 device = -1
@@ -14,6 +13,8 @@ keycode = 4194308
 [sub_resource type="Shortcut" id="Shortcut_5qo6q"]
 events = [SubResource("InputEventKey_gbnor"), SubResource("InputEventKey_sxu45")]
 
+[sub_resource type="ImageTexture" id="ImageTexture_b7dvs"]
+
 [node name="DeletePlayerButton" type="TextureButton"]
 custom_minimum_size = Vector2(23, 0)
 anchors_preset = 11
@@ -24,6 +25,7 @@ grow_horizontal = 0
 grow_vertical = 2
 shortcut = SubResource("Shortcut_5qo6q")
 texture_normal = ExtResource("1_d8o1q")
+texture_hover = ExtResource("1_d8o1q")
+texture_disabled = SubResource("ImageTexture_b7dvs")
 ignore_texture_size = true
 stretch_mode = 5
-script = ExtResource("2_p1o6q")
